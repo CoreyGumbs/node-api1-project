@@ -52,4 +52,17 @@ server.post('/api/users', (req, res) => {
     });
 });
 
+//UPDATE/PUT USER
+server.put('/api/users/:id', (req, res) => {
+    const data = req.body;
+    db.update(req.params.id, data)
+    .then(user => {
+        res.status(201).json(user)
+    })
+    .catch(error => {
+        console.log(error);
+        res.status(500).json({"errorMsg" : error});
+    });
+})
+
 server.listen(port, () => console.log(`Server Runnin on port: ${port}`));
