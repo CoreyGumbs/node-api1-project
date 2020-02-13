@@ -63,6 +63,18 @@ server.put('/api/users/:id', (req, res) => {
         console.log(error);
         res.status(500).json({"errorMsg" : error});
     });
+});
+
+//DELETE USER 
+server.delete('/api/users/:id', (req, res) => {
+    db.remove(req.params.id)
+    .then(user => {
+        res.status(200).json(user)
+    })
+    .catch(error => {
+        console.log(error);
+        res.status(500).json({"errorMsg" : error});
+    });
 })
 
 server.listen(port, () => console.log(`Server Runnin on port: ${port}`));
