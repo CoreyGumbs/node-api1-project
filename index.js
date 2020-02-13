@@ -9,11 +9,13 @@ const port  = 5000;
 server.use(express.json());
 server.use(cors());
 
-
+//GET REQUESTS
+//Test URL
 server.get('/', (req, res) => {
     res.json({"hello": "world"});
 });
 
+//GET LISTS OF ALL USERS
 server.get('/api/users', (req, res)=> {
     db.find()
     .then( user => {
@@ -25,5 +27,16 @@ server.get('/api/users', (req, res)=> {
     });
 });
 
+//GET LIST OF USER BY ID
+server.get('/api/users/:id', (req, res) => {
+    db.findById(req.params.id)
+    .then(user => {
+        res.status(200).json(user);
+    })
+    .catch(error => {
+        console.log(error);
+        res.status(500).json({"errorMsg" : error});
+    })
+})
 
 server.listen(port, () => console.log(`Server Runnin on port: ${port}`));
