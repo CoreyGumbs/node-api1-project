@@ -8,6 +8,9 @@ server.use(express.json());
 server.use(cors());
 
 
+server.get('/', (req, res) => {
+    res.json({"hello": "world"});
+})
 
 
 server.listen(port, () => console.log(`Server Runnin on port: ${port}`));
