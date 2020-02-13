@@ -23,7 +23,7 @@ server.get('/api/users', (req, res)=> {
     })
     .catch(error => {
         console.log(error);
-        res.status(500).json({"errorMsg" : error});
+        res.status(500).json({"errorMessage": "The users information could not be retrieved."});
     });
 });
 
@@ -42,14 +42,26 @@ server.get('/api/users/:id', (req, res) => {
 //POST USER
 server.post('/api/users', (req, res) => {
     const data = req.body;
-    db.insert(data)
-    .then(user => {
-        res.status(201).json(user)
-    })
-    .catch(error => {
-        console.log(error);
-        res.status(500).json({"errorMsg" : error});
-    });
+    console.log(req.body);
+    if(req.body.name  === null || req.body.name  === ''){
+
+        res.status(400).json({ "errorMessage": "Please provide name and bio for the user." });
+        
+    }else if(req.body.bio  === null || req.body.bio  === ''){
+
+        res.status(400).json({ "errorMessage": "Please provide name and bio for the user." });
+
+    }else{
+
+        db.insert(data)
+        .then(user => {
+            res.status(201).json(user)
+        })
+        .catch(error => {
+            console.log(error);
+            res.status(500).json({"errorMsg" : error});
+        });     
+    };
 });
 
 //UPDATE/PUT USER
